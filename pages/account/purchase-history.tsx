@@ -2,12 +2,12 @@ import Layout from "@components/Layout/Layout";
 import { Title } from "@mantine/core";
 import type { NextPage } from "next";
 
-const IndexPage: NextPage = () => {
+const PurchaseHistoryPage: NextPage = () => {
   return (
     <Layout>
-      <Title order={3}>We are about to build something awesome 🚀</Title>
+      <Title order={3}>Purchase history</Title>
     </Layout>
   );
 };
 
-export default IndexPage;
+export default PurchaseHistoryPage;
