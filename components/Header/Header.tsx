@@ -20,15 +20,23 @@ import {
   IconChevronDown,
   IconLogin,
   IconReceipt2,
+  IconHome,
 } from "@tabler/icons";
 import useNearContext from "@context/NearContext";
 import useAuthContext from "@context/AuthContext";
 import useBalanceQuery from "queries/useBalanceQuery";
 import { utils } from "near-api-js";
 import Link from "next/link";
+import Image from "next/image";
 import componentStyles from "./Header.module.css";
+import Logo from "./Logo";
+import { useTheme } from "@emotion/react";
 
 const useStyles = createStyles((theme) => ({
+  logo: {
+    color: theme.colorScheme === "dark" ? theme.white : theme.black,
+  },
+
   header: {
     paddingTop: theme.spacing.sm,
     backgroundColor:
@@ -123,12 +131,16 @@ const Header = () => {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "flex-end",
-                gap: "5px",
+                gap: "10px",
                 cursor: "pointer",
               }}
             >
-              <Title order={2}>Blockchain App</Title>
-              <Title order={5}>on NEAR</Title>
+              <Logo
+                height={36}
+                width={36}
+                fill={theme.colorScheme === "dark" ? theme.white : theme.black}
+              />
+              <Title order={2}>Shop</Title>
             </Box>
           </Link>
 
@@ -202,6 +214,9 @@ const Header = () => {
               {isSignedIn() ? (
                 <>
                   <Menu.Label>Shops</Menu.Label>
+                  <Menu.Item icon={<IconHome size={14} stroke={1.5} />}>
+                    <Link href="/shops/my">My shop</Link>
+                  </Menu.Item>
                   <Menu.Item
                     icon={
                       <IconHeart
