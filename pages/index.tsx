@@ -17,12 +17,12 @@ const IndexPage: NextPage = () => {
   const placeholderShops = [
     { id: "1", name: "Lorem Ipsum" },
     { id: "2", name: "Ipsum Dolor" },
-    { id: "1", name: "Dolor Sin Amet" },
+    { id: "3", name: "Dolor Sin Amet" },
   ];
 
   return (
     <Layout>
-      <Title order={3}>All shops 🚀</Title>
+      <Title order={3}>All shops</Title>
       <Space h={20} />
       <Grid className={componentClasses.shopsGrid}>
         {isLoading ? (
