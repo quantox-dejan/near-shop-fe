@@ -31,15 +31,15 @@ export default function useNearContext(): Context {
   return useContext(NearContext) ?? ({} as Context);
 }
 
-interface ChangeMethodOptions {
+interface ChangeMethodOptions<T> {
   callbackUrl?: string;
   meta?: string;
-  args: Record<string, string | number>;
+  args: Partial<T>;
   gas?: string;
   amount?: string | null;
 }
 
-type ViewMethodOptions = Record<string, string | number>;
+type ViewMethodOptions<T> = T;
 
 export interface UserShopDto {
   id: string;
@@ -47,15 +47,27 @@ export interface UserShopDto {
 }
 
 export interface ProductDto {
-  id: String;
-  name: String;
+  id: string;
+  name: string;
   price: string;
   quantity_on_stock: number;
 }
 
+export interface CreateProductDto {
+  id: string;
+  name: string;
+  price: string;
+  quantity: number;
+}
+
+export interface UpdateProductQuantityDto {
+  product_id: string;
+  quantity: number;
+}
+
 export interface CouponDto {
-  id: String;
-  code: String;
+  id: string;
+  code: string;
   discount_percentage: number;
   applies_to_all_products: boolean;
   applies_to_products: Array<ProductDto>;
@@ -65,41 +77,60 @@ export interface CouponDto {
   times_used: number;
 }
 
+export interface UpdateCouponDto {
+  code: string;
+  discount_percentage: number;
+  applies_to_products: Array<string>;
+  applies_to_user: string | undefined;
+  is_one_time: boolean;
+}
+
+export interface BuyProductDto {
+  user_shop_id: string;
+  product_id: string;
+  quantity: number;
+  using_coupon_code: string | undefined;
+}
+
+type ListUserShopProductsParams = { user_shop_id: string };
+type GetUserShopProductParams = { user_shop_id: string; product_id: string };
+type GetProductCostUsingCouponParams = {
+  user_shop_id: string;
+  product_id: string;
+  quantity: number;
+  coupon_code: string;
+};
+
 export interface ContractInterface extends Contract {
-  get_my_user_shop(): UserShopDto | undefined;
-  list_my_user_shop_products(): Array<ProductDto>;
-  list_all_user_shops(): Array<UserShopDto>;
-  list_user_shop_products(user_shop_id: string): Array<ProductDto>;
+  get_my_user_shop(
+    opts?: ViewMethodOptions<void>
+  ): Promise<UserShopDto | undefined>;
+  list_my_user_shop_products(opts?: ViewMethodOptions<void>): Array<ProductDto>;
+  list_all_user_shops(opts?: ViewMethodOptions<void>): Array<UserShopDto>;
+  list_user_shop_products(
+    opts?: ViewMethodOptions<ListUserShopProductsParams>
+  ): Array<ProductDto>;
   get_user_shop_product(
-    user_shop_id: string,
-    product_id: string
+    opts?: ViewMethodOptions<GetUserShopProductParams>
   ): ProductDto | undefined;
-  list_my_user_shop_coupons(): Array<CouponDto>;
+  list_my_user_shop_coupons(opts?: ViewMethodOptions<void>): Array<CouponDto>;
   get_product_cost_using_coupon(
-    user_shop_id: string,
-    product_id: string,
-    quantity: number,
-    coupon_code: string
+    opts?: ViewMethodOptions<GetProductCostUsingCouponParams>
   ): string;
 
   // Write methods
-  add_user_shop(name: string): void;
-  add_product(name: string, price: string, quantity: number): void;
-  update_product_quantity(product_id: string, quantity: number): void;
-  add_default_coupon(code: string, discount_percentage: number): void;
-  add_specific_coupon(
-    code: string,
-    discount_percentage: number,
-    applies_to_products: Array<string>,
-    applies_to_user: string | undefined,
-    is_one_time: boolean
-  ): void;
-  buy_product(
-    user_shop_id: string,
-    product_id: string,
-    quantity: number,
-    using_coupon_code: string | undefined
+  add_user_shop(opts?: ChangeMethodOptions<UserShopDto>): Promise<void>;
+  add_product(opts?: ChangeMethodOptions<CreateProductDto>): Promise<void>;
+  update_product_quantity(
+    opts?: ChangeMethodOptions<UpdateProductQuantityDto>
   ): Promise<void>;
+  add_default_coupon(
+    opts?: ChangeMethodOptions<UpdateCouponDto>
+  ): Promise<void>;
+  add_specific_coupon(
+    opts?: ChangeMethodOptions<UpdateCouponDto>
+  ): Promise<void>;
+  buy_product(opts?: ChangeMethodOptions<BuyProductDto>): Promise<void>;
 }
 
 const viewMethods: string[] = [

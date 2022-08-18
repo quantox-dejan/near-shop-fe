@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 
 const FavoriteShopsPage: NextPage = () => {
   return (
-    <Layout>
+    <Layout signInRequired>
       <Title order={3}>❤️ Favorite shops</Title>
     </Layout>
   );
