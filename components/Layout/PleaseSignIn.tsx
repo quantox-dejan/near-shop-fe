@@ -7,12 +7,15 @@ export const PleaseSignIn = () => {
     <Container>
       <Card>
         <Center>
-          <Box mr={5}>
-            <Text>🚀 Please sign in to use the NEAR Shop</Text>
+          <Box mr={10}>
+            <Text>🚀 Please</Text>
           </Box>
           <Button disabled={isSigningIn} onClick={() => signIn()}>
             Sign in
           </Button>
+          <Box ml={10}>
+            <Text>to use the NEAR Shop</Text>
+          </Box>
         </Center>
       </Card>
     </Container>

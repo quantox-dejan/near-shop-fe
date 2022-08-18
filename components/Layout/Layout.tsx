@@ -4,12 +4,16 @@ import Header from "../Header/Header";
 import useAuthContext from "@context/AuthContext";
 import { PleaseSignIn } from "./PleaseSignIn";
 
-export default function Layout({ children }: PropsWithChildren) {
+interface LayoutProps extends PropsWithChildren {
+  signInRequired?: boolean;
+}
+
+export default function Layout({ children, signInRequired }: LayoutProps) {
   const { isSignedIn } = useAuthContext();
   return (
     <Container size="xl">
       <Header />
-      {isSignedIn() ? children : <PleaseSignIn />}
+      {!signInRequired || isSignedIn() ? children : <PleaseSignIn />}
     </Container>
   );
 }
