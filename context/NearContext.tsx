@@ -41,6 +41,10 @@ interface ChangeMethodOptions<T> {
 
 type ViewMethodOptions<T> = T;
 
+export interface OwnedEntityInput {
+  user_account_id: string;
+}
+
 export interface UserShopDto {
   id: string;
   name: string;
@@ -103,20 +107,26 @@ type GetProductCostUsingCouponParams = {
 
 export interface ContractInterface extends Contract {
   get_my_user_shop(
-    opts?: ViewMethodOptions<void>
+    opts?: ViewMethodOptions<OwnedEntityInput>
   ): Promise<UserShopDto | undefined>;
-  list_my_user_shop_products(opts?: ViewMethodOptions<void>): Array<ProductDto>;
-  list_all_user_shops(opts?: ViewMethodOptions<void>): Array<UserShopDto>;
+  list_my_user_shop_products(
+    opts?: ViewMethodOptions<OwnedEntityInput>
+  ): Promise<Array<ProductDto>>;
+  list_all_user_shops(
+    opts?: ViewMethodOptions<void>
+  ): Promise<Array<UserShopDto>>;
   list_user_shop_products(
     opts?: ViewMethodOptions<ListUserShopProductsParams>
-  ): Array<ProductDto>;
+  ): Promise<Array<ProductDto>>;
   get_user_shop_product(
     opts?: ViewMethodOptions<GetUserShopProductParams>
-  ): ProductDto | undefined;
-  list_my_user_shop_coupons(opts?: ViewMethodOptions<void>): Array<CouponDto>;
+  ): Promise<ProductDto | undefined>;
+  list_my_user_shop_coupons(
+    opts?: ViewMethodOptions<OwnedEntityInput>
+  ): Promise<Array<CouponDto>>;
   get_product_cost_using_coupon(
     opts?: ViewMethodOptions<GetProductCostUsingCouponParams>
-  ): string;
+  ): Promise<string>;
 
   // Write methods
   add_user_shop(opts?: ChangeMethodOptions<UserShopDto>): Promise<void>;
@@ -136,11 +146,11 @@ export interface ContractInterface extends Contract {
 const viewMethods: string[] = [
   "get_my_user_shop",
   "list_my_user_shop_products",
-  "list_all_user_shops",
+  "list_my_user_shop_coupons",
   "list_user_shop_products",
   "get_user_shop_product",
-  "list_my_user_shop_coupons",
   "get_product_cost_using_coupon",
+  "list_all_user_shops",
 ];
 const changeMethods: string[] = [
   "add_user_shop",

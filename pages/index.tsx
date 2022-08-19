@@ -1,22 +1,13 @@
 import Layout from "@components/Layout/Layout";
+import { NoShopsYet } from "@components/NoShopsYet/NoShopsYet";
 import { Shop } from "@components/Shop/Shop";
-import {
-  Button,
-  Center,
-  Grid,
-  LoadingOverlay,
-  Space,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Grid, Space, Title } from "@mantine/core";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useListAllShopsQuery } from "queries/useListAllShopsQuery";
 import componentClasses from "./index.module.css";
 
 const IndexPage: NextPage = () => {
   const { isLoading, data } = useListAllShopsQuery();
-  const router = useRouter();
   const placeholderShops = [
     { id: "1", name: "Lorem Ipsum" },
     { id: "2", name: "Ipsum Dolor" },
@@ -46,16 +37,7 @@ const IndexPage: NextPage = () => {
               ))
             ) : (
               <Grid.Col span={12}>
-                <Center sx={{ flexDirection: "column", gap: "5px" }}>
-                  <Text weight={600} size={20}>
-                    💔 No shops yet
-                  </Text>
-                  <div>
-                    <Button onClick={() => router.push("/shops/register")}>
-                      Register your own
-                    </Button>
-                  </div>
-                </Center>
+                <NoShopsYet />
               </Grid.Col>
             )}
           </>

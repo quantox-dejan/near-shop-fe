@@ -14,6 +14,7 @@ interface Context {
   signOut(): void;
   isSignedIn(): boolean;
   isSigningIn: boolean;
+  userAccountId: string;
 }
 
 export const AuthContext = createContext<Context | undefined>(undefined);
@@ -65,8 +66,9 @@ export function AuthProvider({ children }: PropsWithChildren<unknown>) {
       signOut,
       isSignedIn,
       isSigningIn,
+      userAccountId: walletConnection?.getAccountId(),
     }),
-    [signIn, signOut, isSignedIn, isSigningIn]
+    [signIn, signOut, isSignedIn, isSigningIn, walletConnection]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

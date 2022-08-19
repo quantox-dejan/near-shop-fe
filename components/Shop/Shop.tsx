@@ -41,7 +41,10 @@ export const Shop = (props: Props) => {
   const { shop, usePlaceholder } = props;
   if (usePlaceholder) {
     return (
-      <Card className={`${classes.shimmer} ${componentStyles.shimmer}`}>
+      <Card
+        withBorder
+        className={`${classes.shimmer} ${componentStyles.shimmer}`}
+      >
         <Center>
           <Avatar size={100} color="cyan" radius="xl">
             <Title>&nbsp;</Title>

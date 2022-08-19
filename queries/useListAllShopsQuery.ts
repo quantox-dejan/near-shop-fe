@@ -5,7 +5,7 @@ export const useListAllShopsQuery = () => {
   const { contract } = useNearContext();
 
   return useQuery(
-    ["shop", "list_all"],
+    ["shops", "list_all"],
     () => contract!.list_all_user_shops!(),
     {
       enabled: !!contract,

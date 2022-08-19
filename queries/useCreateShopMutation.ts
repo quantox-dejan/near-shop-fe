@@ -5,7 +5,7 @@ export const useCreateShopQuery = () => {
   const { contract } = useNearContext();
 
   return useMutation<void, unknown, UserShopDto, unknown>(
-    ["shop", "create"],
+    ["shops", "create"],
     (args) => Promise.resolve(contract?.add_user_shop?.({ args }))
   );
 };
