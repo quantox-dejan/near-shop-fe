@@ -1,7 +1,8 @@
 import Layout from "@components/Layout/Layout";
 import { NoShopsYet } from "@components/NoShopsYet/NoShopsYet";
 import { Shop } from "@components/Shop/Shop";
-import { Grid, Space, Title } from "@mantine/core";
+import { Titlebar } from "@components/Titlebar/Titlebar";
+import { Card, Grid, Group, Space, Title } from "@mantine/core";
 import type { NextPage } from "next";
 import { useListAllShopsQuery } from "queries/useListAllShopsQuery";
 import componentClasses from "./index.module.css";
@@ -16,7 +17,7 @@ const IndexPage: NextPage = () => {
 
   return (
     <Layout>
-      <Title order={3}>All shops</Title>
+      <Titlebar title="Shops index" />
       <Space h={20} />
       <Grid className={componentClasses.shopsGrid}>
         {isLoading ? (

@@ -1,6 +1,8 @@
 import { CreateShopForm } from "@components/CreateShopForm/CreateShopForm";
 import Layout from "@components/Layout/Layout";
-import { LoadingOverlay, Space, Text, Title } from "@mantine/core";
+import { Titlebar } from "@components/Titlebar/Titlebar";
+import { Button, LoadingOverlay, Space, Text, Title } from "@mantine/core";
+import { IconArrowBack } from "@tabler/icons";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useGetMyShop } from "queries/useGetMyShop";
@@ -26,9 +28,17 @@ const RegisterShopPage: NextPage = () => {
 
   return (
     <Layout signInRequired>
-      <Title order={3}>Register a new shop</Title>
+      <Titlebar title="Register a new shop">
+        <Button
+          leftIcon={<IconArrowBack />}
+          compact
+          variant="subtle"
+          onClick={() => router.push("/")}
+        >
+          Shops index
+        </Button>
+      </Titlebar>
       <Space h={20} />
-      {}
       {!data && !error ? (
         <CreateShopForm />
       ) : error ? (

@@ -30,7 +30,6 @@ import Link from "next/link";
 import Image from "next/image";
 import componentStyles from "./Header.module.css";
 import Logo from "./Logo";
-import { useTheme } from "@emotion/react";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -46,7 +45,7 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `1px solid ${
       theme.colorScheme === "dark" ? "transparent" : theme.colors.gray[2]
     }`,
-    marginBottom: 40,
+    marginBottom: 20,
   },
 
   mainSection: {

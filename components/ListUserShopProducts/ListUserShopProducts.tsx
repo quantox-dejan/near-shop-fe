@@ -1,14 +1,12 @@
 import { Product } from "@components/Product/Product";
+import { Titlebar } from "@components/Titlebar/Titlebar";
+import { Button, Center, Grid, Space, Text } from "@mantine/core";
 import {
-  Button,
-  Card,
-  Center,
-  Grid,
-  Group,
-  Space,
-  Text,
-  Title,
-} from "@mantine/core";
+  IconArrowBack,
+  IconHeartPlus,
+  IconPlus,
+  IconShoppingCartPlus,
+} from "@tabler/icons";
 import { useRouter } from "next/router";
 import { useListUserShopProducts } from "queries/useListUserShopProducts";
 import componentClasses from "./ListUserShopProducts.module.css";
@@ -26,24 +24,46 @@ export const ListUserShopProducts = ({ id, my, shopName }: Props) => {
 
   return (
     <>
-      <Card>
-        <Group align="center" position="right">
-          <Title className={componentClasses.shopName} order={3}>
-            {shopName}
-          </Title>
-          {my ? (
-            <Button
-              variant="subtle"
-              onClick={() => router.push("/shops/my/add-product")}
-            >
-              Add a new product
-            </Button>
-          ) : null}
-          <Button variant="subtle" onClick={() => router.push("/")}>
-            Return to shops index
+      <Titlebar title={shopName}>
+        {my ? (
+          <Button
+            leftIcon={<IconShoppingCartPlus />}
+            compact
+            variant="subtle"
+            onClick={() => router.push("/shops/my/add-product")}
+          >
+            New product
           </Button>
-        </Group>
-      </Card>
+        ) : null}
+        {my ? (
+          <Button
+            leftIcon={<IconPlus />}
+            compact
+            variant="subtle"
+            onClick={() => router.push("/shops/my/add-coupon")}
+          >
+            New coupon
+          </Button>
+        ) : null}
+        {!my ? (
+          <Button
+            leftIcon={<IconHeartPlus />}
+            compact
+            variant="subtle"
+            onClick={() => {}}
+          >
+            Add to favorites
+          </Button>
+        ) : null}
+        <Button
+          leftIcon={<IconArrowBack />}
+          compact
+          variant="subtle"
+          onClick={() => router.push("/")}
+        >
+          Shops index
+        </Button>
+      </Titlebar>
       <Space h={20} />
       <Grid className={componentClasses.shopsGrid}>
         {isLoading ? (
@@ -59,7 +79,11 @@ export const ListUserShopProducts = ({ id, my, shopName }: Props) => {
             {isSuccess && data?.length ? (
               data?.map((x) => (
                 <Grid.Col md={4} lg={4} key={x.id}>
-                  <Product product={x} />
+                  <Product
+                    product={x}
+                    my={my}
+                    onBuyClick={() => router.push(`/shops/${id}/${x.id}`)}
+                  />
                 </Grid.Col>
               ))
             ) : (

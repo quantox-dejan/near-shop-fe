@@ -1,5 +1,6 @@
 import { ProductDto } from "@context/NearContext";
 import {
+  ActionIcon,
   Avatar,
   Badge,
   Button,
@@ -10,12 +11,22 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import {
+  IconHeart,
+  IconHeartPlus,
+  IconShoppingCart,
+  IconStar,
+} from "@tabler/icons";
 import { utils } from "near-api-js";
 import componentStyles from "./Product.module.css";
 
 interface Props {
   product?: ProductDto;
   usePlaceholder?: boolean;
+  onBuyClick?: () => void;
+  onFavoriteClick?: () => void;
+  onWishlistClick?: () => void;
+  my?: boolean;
 }
 
 const useStyles = createStyles((theme) => ({
@@ -81,7 +92,13 @@ const mockdata = [
 
 export const Product = (props: Props) => {
   const { classes } = useStyles();
-  const { product, usePlaceholder } = props;
+  const {
+    product,
+    usePlaceholder,
+    onBuyClick,
+    onFavoriteClick,
+    onWishlistClick,
+  } = props;
 
   const features = mockdata.map((feature) => (
     <Center key={feature.label}>
@@ -180,18 +197,28 @@ export const Product = (props: Props) => {
         <Group spacing={30}>
           <div>
             <Text size="xl" weight={700} sx={{ lineHeight: 1 }}>
-              {Number(utils.format.formatNearAmount(product.price)).toFixed(2) +
+              {Number(utils.format.formatNearAmount(product.price)).toFixed(4) +
                 " N"}
             </Text>
           </div>
 
           <Button
+            leftIcon={<IconShoppingCart />}
             disabled={!product.quantity_on_stock}
             radius="xl"
             style={{ flex: 1 }}
+            onClick={onBuyClick}
           >
             Buy now
           </Button>
+          <Group>
+            <ActionIcon size="sm" radius="xl" onClick={onFavoriteClick}>
+              <IconHeart />
+            </ActionIcon>
+            <ActionIcon size="sm" radius="xl" onClick={onWishlistClick}>
+              <IconStar />
+            </ActionIcon>
+          </Group>
         </Group>
       </Card.Section>
     </Card>

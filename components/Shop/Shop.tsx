@@ -65,7 +65,7 @@ export const Shop = (props: Props) => {
 
   return (
     <Link href={`/shops/${shop.id}`}>
-      <Card className={classes.shop}>
+      <Card className={classes.shop} withBorder>
         <Center>
           <Avatar size={100} color="cyan" radius="xl">
             <Title>{shop.name.charAt(0)}</Title>

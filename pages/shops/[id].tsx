@@ -15,9 +15,6 @@ const UserShopPage: NextPage = () => {
   );
 
   const { data: myShopData } = useGetMyShop();
-
-  console.log({ data, myShopData });
-
   return (
     <Layout>
       {isSuccess && !data ? null : isSuccess && !!data ? (
