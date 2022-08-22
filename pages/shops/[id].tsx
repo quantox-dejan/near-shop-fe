@@ -3,6 +3,7 @@ import { ListUserShopProducts } from "@components/ListUserShopProducts/ListUserS
 import { LoadingOverlay, Text, Title } from "@mantine/core";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useGetMyShop } from "queries/useGetMyShop";
 import { useGetUserShopById } from "queries/useGetUserShopById";
 
 const UserShopPage: NextPage = () => {
@@ -13,11 +14,18 @@ const UserShopPage: NextPage = () => {
     id as string
   );
 
+  const { data: myShopData } = useGetMyShop();
+
+  console.log({ data, myShopData });
+
   return (
     <Layout>
-      <Title order={3}>{data?.name ?? "User shop"}</Title>
       {isSuccess && !data ? null : isSuccess && !!data ? (
-        <ListUserShopProducts id={data.id} />
+        <ListUserShopProducts
+          shopName={data?.name ?? "User shop"}
+          id={data.id}
+          my={data.id === myShopData?.id}
+        />
       ) : error ? (
         <Text>{JSON.stringify(error)}</Text>
       ) : null}

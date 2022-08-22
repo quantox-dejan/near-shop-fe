@@ -5,7 +5,7 @@ export const useListUserShopProducts = (id: string) => {
   const { contract } = useNearContext();
 
   return useQuery(
-    ["products", "my"],
+    ["products", id],
     () =>
       contract!.list_user_shop_products?.({
         user_shop_id: id,

@@ -10,6 +10,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { utils } from "near-api-js";
 import componentStyles from "./Product.module.css";
 
 interface Props {
@@ -66,7 +67,8 @@ const useStyles = createStyles((theme) => ({
         : theme.colors.gray[5],
   },
   notOnStock: {
-    color: theme.colors.red,
+    color: theme.colors.red[5],
+    borderColor: theme.colors.red[5],
   },
 }));
 
@@ -96,7 +98,11 @@ export const Product = (props: Props) => {
         radius="md"
         className={`${classes.card} ${classes.shimmer} ${componentStyles.shimmer}`}
       >
-        <Group position="apart" mt="md" className={classes.groupPlaceholder}>
+        <Group
+          position="apart"
+          mt="md"
+          className={`${classes.groupPlaceholder} ${componentStyles.productName}`}
+        >
           <div>
             <Text weight={500} className={classes.textPlaceholder}>
               &nbsp;
@@ -147,7 +153,7 @@ export const Product = (props: Props) => {
 
   return (
     <Card withBorder radius="md" className={classes.card}>
-      <Group position="apart" mt="md">
+      <Group position="apart" mt="md" className={componentStyles.productName}>
         <div>
           <Text weight={500}>{product.name}</Text>
         </div>
@@ -174,7 +180,8 @@ export const Product = (props: Props) => {
         <Group spacing={30}>
           <div>
             <Text size="xl" weight={700} sx={{ lineHeight: 1 }}>
-              {product.price}
+              {Number(utils.format.formatNearAmount(product.price)).toFixed(2) +
+                " N"}
             </Text>
           </div>
 

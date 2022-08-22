@@ -1,3 +1,7 @@
 .shopsGrid {
   position: relative;
 }
+
+.shopName {
+  margin-right: auto;
+}

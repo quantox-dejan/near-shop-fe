@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { useCreateShopQuery } from "queries/useCreateShopMutation";
+import { useCreateShopMutation } from "queries/useCreateShopMutation";
 import { useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import componentClasses from "./CreateShopForm.module.css";
@@ -20,7 +20,7 @@ export const CreateShopForm = () => {
     handleSubmit,
     formState: { isSubmitSuccessful },
   } = useForm<UserShopDto>();
-  const { mutateAsync, isLoading, error } = useCreateShopQuery();
+  const { mutateAsync, isLoading, error } = useCreateShopMutation();
 
   useEffect(() => {
     if (error) {

@@ -22,3 +22,7 @@
     transform: translateX(100%);
   }
 }
+
+.productName > div:first-child {
+  width: 100%;
+}

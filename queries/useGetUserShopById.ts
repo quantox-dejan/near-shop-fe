@@ -7,7 +7,7 @@ export const useGetUserShopById = (id: string) => {
   const { isReady } = useRouter();
 
   return useQuery(
-    ["shops", "my"],
+    ["shops", id],
     () => contract!.get_user_shop?.({ user_shop_id: id }),
     {
       enabled: !!contract && isReady,

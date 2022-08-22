@@ -9,12 +9,14 @@ const MyShopPage: NextPage = () => {
   const { data, isLoading, isSuccess, error } = useGetMyShop();
   return (
     <Layout signInRequired>
-      <Title order={3}>{!data ? "My shop" : `My shop - ${data.name}`}</Title>
-      <Space h={20} />
       {isSuccess && !data ? (
         <NoShopsYet />
       ) : isSuccess && !!data ? (
-        <ListUserShopProducts id={data.id} my />
+        <ListUserShopProducts
+          id={data.id}
+          my
+          shopName={data?.name ?? "My shop"}
+        />
       ) : error ? (
         <Text>{JSON.stringify(error)}</Text>
       ) : null}
