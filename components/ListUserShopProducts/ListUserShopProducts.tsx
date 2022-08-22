@@ -1,13 +1,16 @@
 import { Product } from "@components/Product/Product";
 import { Button, Center, Grid, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { useListMyShopProducts } from "queries/useListMyShopProducts";
-import componentClasses from "./ListMyUserShopProducts.module.css";
+import { useListUserShopProducts } from "queries/useListUserShopProducts";
+import componentClasses from "./ListUserShopProducts.module.css";
 
-interface Props {}
+interface Props {
+  id: string;
+  my?: boolean;
+}
 
-export const ListMyUserShopProducts = (props: Props) => {
-  const { data, isSuccess, isLoading } = useListMyShopProducts();
+export const ListUserShopProducts = ({ id, my }: Props) => {
+  const { data, isSuccess, isLoading } = useListUserShopProducts(id);
   const router = useRouter();
   const placeholderProducts = new Array(3).fill(0);
 
@@ -35,11 +38,15 @@ export const ListMyUserShopProducts = (props: Props) => {
                 <Text weight={600} size={20}>
                   💔 No product yet
                 </Text>
-                <div>
-                  <Button onClick={() => router.push("/shops/my/add-product")}>
-                    Add a new one
-                  </Button>
-                </div>
+                {my ? (
+                  <div>
+                    <Button
+                      onClick={() => router.push("/shops/my/add-product")}
+                    >
+                      Add a new one
+                    </Button>
+                  </div>
+                ) : null}
               </Center>
             </Grid.Col>
           )}

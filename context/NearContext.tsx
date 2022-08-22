@@ -115,6 +115,9 @@ export interface ContractInterface extends Contract {
   list_all_user_shops(
     opts?: ViewMethodOptions<void>
   ): Promise<Array<UserShopDto>>;
+  get_user_shop(
+    opts?: ViewMethodOptions<ListUserShopProductsParams>
+  ): Promise<UserShopDto | undefined>;
   list_user_shop_products(
     opts?: ViewMethodOptions<ListUserShopProductsParams>
   ): Promise<Array<ProductDto>>;
@@ -147,6 +150,7 @@ const viewMethods: string[] = [
   "get_my_user_shop",
   "list_my_user_shop_products",
   "list_my_user_shop_coupons",
+  "get_user_shop",
   "list_user_shop_products",
   "get_user_shop_product",
   "get_product_cost_using_coupon",

@@ -2,31 +2,39 @@ import { UserShopDto } from "@context/NearContext";
 import {
   Button,
   Card,
-  Container,
   LoadingOverlay,
   Space,
   Text,
   TextInput,
 } from "@mantine/core";
+import { useRouter } from "next/router";
 import { useCreateShopQuery } from "queries/useCreateShopMutation";
 import { useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import componentClasses from "./CreateShopForm.module.css";
 
 export const CreateShopForm = () => {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitSuccessful },
   } = useForm<UserShopDto>();
-  const { mutate, isLoading, isError, isSuccess, error } = useCreateShopQuery();
+  const { mutateAsync, isLoading, error } = useCreateShopQuery();
+
   useEffect(() => {
     if (error) {
       console.error(error);
     }
   }, [error]);
 
-  const onSubmit: SubmitHandler<UserShopDto> = (data) => mutate(data);
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      router.push("/shops/my");
+    }
+  }, [isSubmitSuccessful, router]);
+
+  const onSubmit: SubmitHandler<UserShopDto> = (data) => mutateAsync(data);
   return (
     <Card>
       <div className={componentClasses.wrapper}>
@@ -34,7 +42,7 @@ export const CreateShopForm = () => {
           <Controller
             name="name"
             control={control}
-            rules={{ required: true }}
+            rules={{ required: "This field is required" }}
             render={({ field }) => (
               <TextInput
                 placeholder="Shop name"
@@ -44,11 +52,6 @@ export const CreateShopForm = () => {
               />
             )}
           />
-          {errors.name && (
-            <Text size="sm" color="red">
-              This field is required
-            </Text>
-          )}
           <Space h={20} />
           <Button type="submit">Register</Button>
         </form>
